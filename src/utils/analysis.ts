@@ -67,29 +67,65 @@ export function getLineClasses(tone: LineTone) {
   }
 }
 
-export function getNodeLabel(node: Node) {
-  const summaryParts: string[] = []
-  const summaryKeys = ['name', 'kind', 'operator', 'value']
+export function getAstNodeDetails(node: Node) {
+  const details: string[] = []
   const nodeRecord = node as unknown as Record<string, unknown>
 
-  for (const key of summaryKeys) {
-    const value = nodeRecord[key]
-
+  const pushDetail = (label: string, value: unknown) => {
     if (
       value === undefined ||
       value === null ||
       typeof value === 'object' ||
       typeof value === 'function'
     ) {
-      continue
+      return
     }
 
-    summaryParts.push(`${key}: ${String(value)}`)
+    details.push(`${label}: ${String(value)}`)
   }
 
-  return summaryParts.length > 0
-    ? `${node.type} (${summaryParts.join(', ')})`
-    : node.type
+  pushDetail('name', nodeRecord.name)
+  pushDetail('kind', nodeRecord.kind)
+  pushDetail('operator', nodeRecord.operator)
+  pushDetail('value', nodeRecord.value)
+
+  if ('id' in node && node.id && typeof node.id === 'object' && 'name' in node.id) {
+    pushDetail('id', node.id.name)
+  }
+
+  if ('key' in node && node.key && typeof node.key === 'object' && 'name' in node.key) {
+    pushDetail('key', node.key.name)
+  }
+
+  return details.slice(0, 3)
+}
+
+export function getAstNodeCategory(node: Node) {
+  if (node.type === 'Program') {
+    return 'program'
+  }
+
+  if (node.type === 'Identifier') {
+    return 'identifier'
+  }
+
+  if (node.type.endsWith('Literal')) {
+    return 'literal'
+  }
+
+  if (node.type.endsWith('Declaration') || node.type === 'VariableDeclarator') {
+    return 'declaration'
+  }
+
+  if (node.type.endsWith('Statement')) {
+    return 'statement'
+  }
+
+  if (node.type.endsWith('Expression')) {
+    return 'expression'
+  }
+
+  return 'default'
 }
 
 export function isNode(value: unknown): value is Node {
@@ -190,6 +226,16 @@ export function buildScopeReport(ast: ParsedFile | null): ScopeInfo[] {
         .map((binding) => ({
           name: binding.identifier.name,
           kind: binding.kind,
+          declarationLine: binding.identifier.loc?.start.line ?? 1,
+          availableFromLine:
+            binding.kind === 'var' || binding.kind === 'hoisted'
+              ? path.node.loc?.start.line ?? 1
+              : binding.identifier.loc?.start.line ?? 1,
+          tdzUntilLine:
+            binding.kind === 'let' || binding.kind === 'const'
+              ? binding.identifier.loc?.start.line ?? 1
+              : undefined,
+          isBlockScoped: binding.kind === 'let' || binding.kind === 'const',
         }))
         .sort((left, right) => left.name.localeCompare(right.name))
 
@@ -227,7 +273,7 @@ function getScopeLabel(path: NodePath<Node>) {
 
   if (path.isFunction()) {
     const namedNode = path.node as Node & { id?: { name?: string } | null }
-    return namedNode.id?.name ? `Function scope: ${namedNode.id.name}` : 'Function scope'
+    return namedNode.id?.name ? `Function: ${namedNode.id.name}` : 'Function scope'
   }
 
   if (path.isCatchClause()) {
@@ -528,19 +574,17 @@ export function buildTdzReport(ast: ParsedFile | null) {
 
       const scopeNode = path.scope.block
       const startLine = getBindingScopeLine(scopeNode)
+      const endLine = scopeNode.loc?.end.line ?? declarationLine
       const zone: TdzZone = {
         name: path.node.id.name,
         kind: declaration.kind,
         startLine,
         declarationLine,
+        endLine,
         accesses: [],
       }
 
       zonesByName.set(`${path.node.id.name}-${path.node.start}`, zone)
-
-      for (let line = startLine; line < declarationLine; line += 1) {
-        highlightedLines.set(line, 'danger')
-      }
       highlightedLines.set(declarationLine, 'warning')
     },
   })

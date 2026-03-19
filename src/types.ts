@@ -49,6 +49,10 @@ export type ParseState = {
 export type ScopeVariable = {
   name: string
   kind: string
+  declarationLine: number
+  availableFromLine: number
+  tdzUntilLine?: number
+  isBlockScoped: boolean
 }
 
 export type ScopeInfo = {
@@ -71,6 +75,7 @@ export type TdzZone = {
   kind: 'let' | 'const'
   startLine: number
   declarationLine: number
+  endLine: number
   accesses: number[]
 }
 

@@ -43,3 +43,19 @@ select {
   background: rgba(251, 191, 36, 0.1);
   border-bottom: 1px solid rgba(251, 191, 36, 0.48);
 }
+
+.scope-box-appear {
+  animation: scope-box-appear 320ms ease-out both;
+}
+
+@keyframes scope-box-appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

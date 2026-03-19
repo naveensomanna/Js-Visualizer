@@ -107,10 +107,6 @@ function App() {
       })),
     [hoistingView.transformedLines],
   )
-  const tdzLines = useMemo(
-    () => toCodeLines(debouncedCode, tdzReport.highlightedLines),
-    [debouncedCode, tdzReport.highlightedLines],
-  )
   const activeClosure =
     closureReport.find((closure) => closure.id === selectedClosureId) ??
     closureReport[0] ??
@@ -475,7 +471,7 @@ function App() {
               {selectedTab === 'tdz' ? (
                 <TdzPanel
                   parsed={parsed}
-                  tdzLines={tdzLines}
+                  code={debouncedCode}
                   zones={tdzReport.zones}
                 />
               ) : null}
