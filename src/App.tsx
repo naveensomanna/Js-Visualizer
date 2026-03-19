@@ -4,6 +4,7 @@ import type { Node } from '@babel/types'
 import type { editor as MonacoEditor } from 'monaco-editor'
 import {
   DEFAULT_CODE,
+  PIPELINE_STEPS,
   SAMPLE_SNIPPETS,
   TAB_ITEMS,
 } from './constants'
@@ -260,6 +261,22 @@ function App() {
     }
   }
 
+  const activePipelineStepId =
+    PIPELINE_STEPS.find((step) => step.stageTabs.includes(selectedTab))?.id ?? null
+
+  const handlePipelineStepClick = (
+    step: (typeof PIPELINE_STEPS)[number],
+  ) => {
+    if (step.id === 'source') {
+      editorRef.current?.focus()
+      return
+    }
+
+    if (step.targetTab) {
+      setSelectedTab(step.targetTab)
+    }
+  }
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#040814] text-slate-100">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.14),transparent_28%),radial-gradient(circle_at_78%_16%,rgba(251,191,36,0.12),transparent_20%),linear-gradient(180deg,rgba(4,8,20,0.92),rgba(2,6,16,1))]" />
@@ -411,7 +428,61 @@ function App() {
           <section className="relative flex min-h-[420px] flex-col overflow-hidden rounded-4xl border border-[#22314d] bg-[linear-gradient(180deg,rgba(8,14,26,0.96),rgba(5,10,20,0.99))] shadow-[0_30px_80px_rgba(0,0,0,0.3)]">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(251,191,36,0.6),transparent)]" />
             <div className="border-b border-[#22314d] px-4 py-3">
-              <div className="flex flex-wrap gap-2">
+              <div className="rounded-[1.4rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(9,16,31,0.9),rgba(7,13,24,0.96))] px-3 py-3">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-slate-400">
+                      V8 execution pipeline
+                    </p>
+                    <p className="mt-1 text-xs text-slate-500">
+                      Follow how source code turns into structure and runtime behavior.
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  {PIPELINE_STEPS.map((step, index) => {
+                    const isActive = activePipelineStepId === step.id
+                    const isClickable = step.id === 'source' || Boolean(step.targetTab)
+
+                    return (
+                      <div key={step.id} className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handlePipelineStepClick(step)}
+                          disabled={!isClickable}
+                          className={`group rounded-full border px-3 py-2 text-left transition ${
+                            isActive
+                              ? 'border-sky-300/45 bg-[linear-gradient(90deg,rgba(22,58,96,0.94),rgba(10,31,56,0.98))] text-sky-50 shadow-[0_0_0_1px_rgba(125,211,252,0.08),0_0_24px_rgba(56,189,248,0.18)]'
+                              : isClickable
+                                ? 'border-[#31405e] bg-[#08111f] text-slate-300 hover:border-amber-300/35 hover:bg-[#0d1728] hover:text-white'
+                                : 'cursor-not-allowed border-[#26324a] bg-[#07101d] text-slate-500 opacity-75'
+                          }`}
+                        >
+                          <span className="block text-[11px] font-semibold uppercase tracking-[0.16em]">
+                            {step.label}
+                          </span>
+                          <span
+                            className={`mt-1 block text-[10px] tracking-[0.02em] ${
+                              isActive
+                                ? 'text-sky-100/80'
+                                : isClickable
+                                  ? 'text-slate-500 group-hover:text-slate-300'
+                                  : 'text-slate-600'
+                            }`}
+                          >
+                            {step.subtitle}
+                            {step.comingSoon ? ' · coming soon' : ''}
+                          </span>
+                        </button>
+                        {index < PIPELINE_STEPS.length - 1 ? (
+                          <span className="select-none text-sm text-slate-500">→</span>
+                        ) : null}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
                 {TAB_ITEMS.map((tab) => (
                   <button
                     key={tab.id}

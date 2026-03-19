@@ -77,6 +77,57 @@ export const TAB_ITEMS: Array<{ id: TabId; label: string }> = [
   { id: 'callstack', label: 'Call Stack' },
 ]
 
+export const PIPELINE_STEPS: Array<{
+  id: 'source' | 'tokens' | 'ast' | 'scope' | 'bytecode' | 'execution'
+  label: string
+  subtitle: string
+  targetTab?: TabId
+  stageTabs: TabId[]
+  comingSoon?: boolean
+}> = [
+  {
+    id: 'source',
+    label: 'Source Code',
+    subtitle: 'what you write',
+    stageTabs: [],
+  },
+  {
+    id: 'tokens',
+    label: 'Tokens',
+    subtitle: 'lexer output',
+    targetTab: 'tokens',
+    stageTabs: ['tokens'],
+  },
+  {
+    id: 'ast',
+    label: 'AST',
+    subtitle: 'syntax tree',
+    targetTab: 'ast',
+    stageTabs: ['ast'],
+  },
+  {
+    id: 'scope',
+    label: 'Scope',
+    subtitle: 'variable resolution',
+    targetTab: 'scope',
+    stageTabs: ['scope', 'closure', 'hoisting', 'tdz'],
+  },
+  {
+    id: 'bytecode',
+    label: 'Bytecode',
+    subtitle: 'V8 instructions',
+    stageTabs: [],
+    comingSoon: true,
+  },
+  {
+    id: 'execution',
+    label: 'Execution',
+    subtitle: 'runtime',
+    stageTabs: ['callstack'],
+    comingSoon: true,
+  },
+]
+
 export const TOKEN_STYLES: Record<TokenCategory, string> = {
   KEYWORD:
     'border-fuchsia-400/30 bg-fuchsia-400/8 text-fuchsia-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]',
