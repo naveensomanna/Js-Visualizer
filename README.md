@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# JS Visualizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Understand how JavaScript really works — one concept at a time.
 
-Currently, two official plugins are available:
+Most developers use JavaScript daily but never see what happens 
+under the hood. JS Visualizer makes the invisible visible.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What it does
 
-## React Compiler
+Type any JavaScript code and instantly see:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Tokens** — how the lexer breaks your code into meaningful chunks
+- **AST** — the syntax tree your code becomes before execution
+- **Scope Chain** — how JavaScript resolves variable lookups
+- **Hoisting** — what V8 does to your code before running it
+- **TDZ** — exactly which lines would throw a ReferenceError and why
+- **Closures** — which variables are captured and from where
+- **Call Stack** — how function calls stack up during execution
 
-## Expanding the ESLint configuration
+## Why I built this
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Learning JavaScript internals is hard. Tools like astexplorer.net 
+show raw JSON that overwhelms beginners. Nothing showed the full 
+pipeline — lexer to scope — in one visual, learner-friendly place.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+This is the tool I wished existed when I was learning.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Live Demo
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+https://js-visualizer-blush.vercel.app
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- React + Vite + TypeScript
+- @babel/parser + @babel/traverse
+- Monaco Editor
+- Tailwind CSS
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Inspired by
+
+- astexplorer.net — AST only, raw JSON
+- pythontutor.com — same concept, for Python
+- Tyler McGinnis's JS Visualizer — old, unmaintained
+
+## Run locally
+
+git clone https://github.com/yourusername/js-visualizer
+cd js-visualizer
+npm install
+npm run dev
