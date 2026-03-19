@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://js-visualizer-blush.vercel.app/sitemap.xml

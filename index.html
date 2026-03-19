@@ -4,10 +4,59 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JS Visualizer</title>
+    <title>JS Visualizer | Learn Tokens, AST, Scope, Hoisting, and TDZ</title>
+    <meta
+      name="description"
+      content="Interactive JavaScript visualizer for learning tokens, AST, scope chain, hoisting, TDZ, closures, and call stack in one live workspace."
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta name="theme-color" content="#040814" />
+    <meta name="application-name" content="JS Visualizer" />
+    <link rel="canonical" href="https://js-visualizer-blush.vercel.app/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="JS Visualizer" />
+    <meta property="og:title" content="JS Visualizer" />
+    <meta
+      property="og:description"
+      content="Understand how JavaScript really works with live views for tokens, AST, scope, hoisting, TDZ, closures, and the call stack."
+    />
+    <meta property="og:url" content="https://js-visualizer-blush.vercel.app/" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="JS Visualizer" />
+    <meta
+      name="twitter:description"
+      content="Interactive JavaScript internals visualizer for tokens, AST, scope, hoisting, TDZ, closures, and call stack."
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "JS Visualizer",
+        "url": "https://js-visualizer-blush.vercel.app/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "description": "Interactive JavaScript visualizer for learning tokens, AST, scope chain, hoisting, TDZ, closures, and call stack.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      JS Visualizer is an interactive tool for exploring JavaScript tokens, AST,
+      scope, hoisting, TDZ, closures, and call stack. Enable JavaScript to use
+      the live visualizations.
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
