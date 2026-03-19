@@ -25,7 +25,7 @@ export function HoistingPanel({
         />
       ) : (
         <div className="space-y-4">
-          <div className="grid gap-4 xl:grid-cols-2">
+          <div className="grid gap-4 lg:grid-cols-2">
             <CodePane
               title="Source"
               subtitle="Original order with hoisted declarations highlighted."
@@ -38,7 +38,7 @@ export function HoistingPanel({
             />
           </div>
           {notes.length > 0 ? (
-            <div className="rounded-[1.35rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(11,18,33,0.94),rgba(8,14,26,0.98))] p-4">
+            <div className="rounded-[1.2rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(11,18,33,0.94),rgba(8,14,26,0.98))] p-3 sm:rounded-[1.35rem] sm:p-4">
               <p className="text-[11px] uppercase tracking-[0.26em] text-slate-400">
                 Notes
               </p>

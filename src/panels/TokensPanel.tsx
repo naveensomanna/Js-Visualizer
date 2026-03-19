@@ -10,7 +10,7 @@ export function TokensPanel({ parsed }: { parsed: ParseState }) {
       description="Live token output from the current source."
     >
       <div className="mb-4 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-[1.35rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(11,18,33,0.94),rgba(8,14,26,0.98))] p-4">
+        <div className="rounded-[1.2rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(11,18,33,0.94),rgba(8,14,26,0.98))] p-3 sm:rounded-[1.35rem] sm:p-4">
           <p className="text-[11px] uppercase tracking-[0.26em] text-slate-400">
             Total tokens
           </p>
@@ -18,7 +18,7 @@ export function TokensPanel({ parsed }: { parsed: ParseState }) {
             {parsed.tokens.length}
           </p>
         </div>
-        <div className="rounded-[1.35rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(11,18,33,0.94),rgba(8,14,26,0.98))] p-4">
+        <div className="rounded-[1.2rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(11,18,33,0.94),rgba(8,14,26,0.98))] p-3 sm:rounded-[1.35rem] sm:p-4">
           <p className="text-[11px] uppercase tracking-[0.26em] text-slate-400">
             Parser status
           </p>
@@ -30,16 +30,16 @@ export function TokensPanel({ parsed }: { parsed: ParseState }) {
 
       {parsed.error ? <ErrorState message={parsed.error} /> : null}
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap gap-1.5 sm:gap-2">
         {parsed.tokens.map((token) => (
           <div
             key={token.id}
-            className={`rounded-full border px-3 py-2 ${TOKEN_STYLES[token.category]}`}
+            className={`rounded-full border px-2.5 py-1.5 sm:px-3 sm:py-2 ${TOKEN_STYLES[token.category]}`}
           >
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em]">
+            <div className="text-[9px] font-semibold uppercase tracking-[0.14em] sm:text-[10px] sm:tracking-[0.18em]">
               {token.category}
             </div>
-            <div className="mt-1 flex items-center gap-2 text-sm">
+            <div className="mt-1 flex items-center gap-1.5 text-xs sm:gap-2 sm:text-sm">
               <span className="font-medium">{token.value}</span>
               <span className="text-xs opacity-75">{token.label}</span>
             </div>

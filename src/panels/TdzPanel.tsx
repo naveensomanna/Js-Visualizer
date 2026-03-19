@@ -82,7 +82,7 @@ export function TdzPanel({
         />
       ) : (
         <div className="space-y-4">
-          <div className="rounded-[1.35rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(11,18,33,0.94),rgba(8,14,26,0.98))] px-4 py-3">
+          <div className="rounded-[1.2rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(11,18,33,0.94),rgba(8,14,26,0.98))] px-3 py-3 sm:rounded-[1.35rem] sm:px-4">
             <p className="text-sm leading-6 text-slate-300">
               let and const are hoisted but not initialized. Accessing them before
               their declaration line throws a ReferenceError.
@@ -93,7 +93,7 @@ export function TdzPanel({
               zones.map((zone) => (
                 <div
                   key={`${zone.name}-${zone.declarationLine}`}
-                  className="rounded-[1.35rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(11,18,33,0.94),rgba(8,14,26,0.98))] p-4"
+                  className="rounded-[1.2rem] border border-[#24324f] bg-[linear-gradient(180deg,rgba(11,18,33,0.94),rgba(8,14,26,0.98))] p-3 sm:rounded-[1.35rem] sm:p-4"
                 >
                   <div className="flex flex-wrap items-center gap-3">
                     <span
@@ -114,7 +114,7 @@ export function TdzPanel({
                   </p>
 
                   <div className="mt-4 overflow-hidden rounded-[1.2rem] border border-[#24324f] bg-[#07111f]/90">
-                    <div className="border-b border-[#24324f] px-4 py-3">
+                    <div className="border-b border-[#24324f] px-3 py-3 sm:px-4">
                       <p className="text-sm font-medium text-slate-100">
                         {zone.name} timeline
                       </p>
@@ -122,13 +122,13 @@ export function TdzPanel({
                         Scope lines {zone.startLine}-{zone.endLine}
                       </p>
                     </div>
-                    <div className="max-h-88 overflow-auto px-2 py-2 font-mono text-sm">
+                    <div className="max-h-88 overflow-auto px-2 py-2 font-mono text-xs sm:text-sm">
                       {getRelevantLines(code, zone).map((line) => (
                         <div
                           key={`${zone.name}-${line.number}`}
                           className={`mb-2 rounded-xl border px-3 py-2 ${getZoneClasses(zone, line.number)}`}
                         >
-                          <div className="grid grid-cols-[3rem_minmax(0,1fr)] gap-3">
+                          <div className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-2 sm:grid-cols-[3rem_minmax(0,1fr)] sm:gap-3">
                             <span className="select-none text-right text-slate-400">
                               {line.number}
                             </span>
@@ -136,7 +136,7 @@ export function TdzPanel({
                               {line.content || ' '}
                             </span>
                           </div>
-                          <div className="mt-2 border-t border-white/8 pt-2 pl-15 text-xs font-medium tracking-[0.02em] text-current/90">
+                          <div className="mt-2 border-t border-white/8 pt-2 pl-12 text-[11px] font-medium tracking-[0.02em] text-current/90 sm:pl-15 sm:text-xs">
                             {getZoneLabel(zone, line.number)}
                           </div>
                         </div>

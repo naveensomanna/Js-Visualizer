@@ -56,21 +56,21 @@ export function AstTreeNode({
     <div className="relative">
       {depth > 0 ? (
         <>
-          <div className={`absolute left-4 top-0 bottom-0 w-px ${connectorColor}`} />
-          <div className={`absolute left-4 top-8 h-px w-5 ${connectorColor}`} />
+          <div className={`absolute top-0 bottom-0 left-3 w-px sm:left-4 ${connectorColor}`} />
+          <div className={`absolute top-6 left-3 h-px w-4 sm:top-8 sm:left-4 sm:w-5 ${connectorColor}`} />
         </>
       ) : null}
 
-      <div className={`${depth > 0 ? 'pl-8' : ''}`}>
+      <div className={`${depth > 0 ? 'pl-6 sm:pl-8' : ''}`}>
         <div
-          className={`rounded-3xl border px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all duration-300 ${getAstNodeColors(node, isSelected)}`}
+          className={`rounded-[1.2rem] border px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all duration-300 sm:rounded-3xl sm:px-4 sm:py-4 ${getAstNodeColors(node, isSelected)}`}
         >
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-2.5 sm:gap-3">
             {hasChildren ? (
               <button
                 type="button"
                 onClick={() => setExpanded((current) => !current)}
-                className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/15 text-sm text-slate-100 transition hover:border-sky-300/40 hover:bg-sky-300/10"
+                className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/15 text-xs text-slate-100 transition hover:border-sky-300/40 hover:bg-sky-300/10 sm:h-8 sm:w-8 sm:text-sm"
                 aria-label={expanded ? 'Collapse node' : 'Expand node'}
               >
                 <span className={`transition-transform duration-300 ${expanded ? 'rotate-90' : ''}`}>
@@ -87,19 +87,19 @@ export function AstTreeNode({
               className="min-w-0 flex-1 text-left"
             >
               {relationLabel ? (
-                <span className="inline-flex rounded-full border border-white/10 bg-black/15 px-2 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-slate-200/85">
+                <span className="inline-flex rounded-full border border-white/10 bg-black/15 px-2 py-1 text-[9px] font-medium uppercase tracking-[0.14em] text-slate-200/85 sm:text-[10px] sm:tracking-[0.18em]">
                   {relationLabel}
                 </span>
               ) : null}
-              <p className="mt-2 text-base font-semibold leading-6 text-white sm:text-lg">
+              <p className="mt-2 text-sm font-semibold leading-5 text-white sm:text-lg sm:leading-6">
                 {node.type}
               </p>
-              <div className="mt-2 flex flex-wrap gap-2">
+              <div className="mt-2 flex flex-wrap gap-1.5 sm:gap-2">
                 {details.length > 0 ? (
                   details.map((detail) => (
                     <span
                       key={`${nodeKey}-${detail}`}
-                      className="rounded-full border border-white/10 bg-black/15 px-2.5 py-1 text-xs text-slate-100/85"
+                      className="rounded-full border border-white/10 bg-black/15 px-2 py-1 text-[11px] text-slate-100/85 sm:px-2.5 sm:text-xs"
                     >
                       {detail}
                     </span>
@@ -118,12 +118,12 @@ export function AstTreeNode({
       <div
         className={`grid transition-[grid-template-rows,opacity,margin] duration-300 ease-out ${
           hasChildren && expanded
-            ? 'mt-3 grid-rows-[1fr] opacity-100'
+            ? 'mt-2 grid-rows-[1fr] opacity-100 sm:mt-3'
             : 'mt-0 grid-rows-[0fr] opacity-0'
         }`}
       >
         <div className="overflow-hidden">
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {children.map((child) => (
               <AstTreeNode
                 key={`${nodeKey}-${child.key}`}
